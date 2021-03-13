@@ -1,0 +1,27 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: mongodb
+  namespace: jean2978-code
+  labels:
+    name: mongodb
+spec:
+  triggers:
+    - type: GitHub
+      github:
+        secret: secret101
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/jean2978/Simpleschedule.git'
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: MongoDB
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'mongodb:latest'
