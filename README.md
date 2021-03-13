@@ -1,1 +1,3 @@
 # Simpleschedule
+Very simple spring application...
+TEST for openshift
