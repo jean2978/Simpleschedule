@@ -3,6 +3,7 @@ package com.example.SpringSchedule.service;
 import com.example.SpringSchedule.model.POJO;
 import com.example.SpringSchedule.repository.CrudRepository;
 import com.example.SpringSchedule.repository.ScheduleData;
+import com.mongodb.MongoSocketOpenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,11 @@ public class ScheduleService {
             LOGGER.info("Amount of objects that will be added - " + scheduleData.getData().size());
             for (POJO pojo : scheduleData.getData()) {
                 if(pojo != null){
-                    crudRepository.save(pojo);
+                    try {
+                        crudRepository.save(pojo);
+                    }catch (MongoSocketOpenException e){
+                        LOGGER.error(e.getMessage());
+                    }
                 }
             }
             scheduleData.getData().clear();
